@@ -231,9 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         // facebook
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        // compress image
-        'Image' => Intervention\Image\Facades\Image::class
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class
     ],
 
 ];

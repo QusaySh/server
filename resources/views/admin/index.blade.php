@@ -6,7 +6,6 @@
 <div class="container-fluid page-dashboard">
     <h3 class="text-center mt-4 animated bounceInLeft">الإحصائيات</h3>
     <div class="row">
-
         <div class="col-md-3">
             @php $active = 'home'; @endphp
             @include('layouts.sidebar')
