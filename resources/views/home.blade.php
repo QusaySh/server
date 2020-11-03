@@ -7,7 +7,7 @@
     <div class="row">
 
         <div class="col-md-5">
-            <div class="my-information border rounded-lg wow bounceIn">
+            <div class="my-information border rounded-lg animated zoomIn">
                 
                 <div class="text-center mb-4">
                     <a data-magnify="gallery"
@@ -69,7 +69,7 @@
                     @endforeach
 
                 @else
-                    <div class="text-center">
+                    <div class="text-center animated zoomInLeft">
                         <img width="150" height="150" src="{{ asset('images/no-data.png') }}" alt="" />
                         <h3 class="mt-4">لايوجد  لديك رسائل</h3>
                         <p class="mb-1">قم بنشر الرابط الخاص بك</p>

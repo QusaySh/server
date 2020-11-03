@@ -31,7 +31,9 @@
                             <label for="email" class="col-md-3 col-form-label text-md-right">{{ __('البريد الإلكتروني') }}:</label>
 
                             <div class="col-md-8 mb-3"> 
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" >
+                            <input type="email" class="form-control @error('email') is-invalid  @enderror" id="email" name="email" value="@if ( isset($_COOKIE['rember']) )
+                                {{ $_COOKIE['rember'] }}
+                            @endif">
                                 <div class="invalid-feedback">
                                     @error('email')
                                         {{ $message }}

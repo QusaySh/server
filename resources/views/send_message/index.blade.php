@@ -13,7 +13,7 @@
                            data-group=""
                            href="{{$user->facebook_id != null ? $user->avatar : asset("avatar") . "/" . $user->avatar }}"
                         ><img class="rounded-circle" width="90" height="90" src="{{ $user->facebook_id != null ? $user->avatar : asset("avatar") . "/" . $user->avatar }}" /></a>
-                    <h3 class="mt-3">{{ $user->name }}</h3>
+                    <h3 class="mt-3 animated zoomIn">{{ $user->name }}</h3>
                     @if ( !empty($user->facebook) )
                         <a href="{{ $user->facebook }}" target="_blank"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
                     @endif
@@ -43,7 +43,7 @@
                                 @enderror
                             </div>
                             <div class="text-left">
-                                <button class="btn btn-info mt-4" type="submit"><i class="fa fa-send fa-fw"></i> إرسال</button>
+                                <button class="btn btn-info mt-4 animated slideInRight" type="submit"><i class="fa fa-send fa-fw"></i> إرسال</button>
                             </div>
                         </form>
                     </div>
