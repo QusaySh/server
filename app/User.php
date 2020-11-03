@@ -17,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'key', 'name', 'email', 'password', 'show_account', 'send_email',
-        'facebook_id', 'avatar', 'facebook', 'instagram'
+        'facebook_id', 'avatar', 'email_verified_at', 'facebook', 'instagram'
     ];
 
     /**

@@ -64,6 +64,7 @@ class LoginController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'password' => Hash::make('aser515411'),
+                    'email_verified_at' => date('Y-m-d h:i:s'),
                     'show_account' => 'on',
                     'facebook_id' => $user->id,
                     'avatar' => $user->avatar_original

@@ -36,7 +36,8 @@ class HomeController extends Controller
 
         $users = User::where([
             ['name', 'like', '%' . $request->search . '%'],
-            ['show_account', '=', 'on']
+            ['show_account', '=', 'on'],
+            ['email_verified_at', '!=', null]
         ])->get();
 
         $search = $request->search;
