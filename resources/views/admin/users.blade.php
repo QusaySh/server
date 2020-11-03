@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container-fluid page-dashboard">
-    <h2 class="text-center mt-4 animated bounceInLeft">إدارة المستخدمين</h2>
+    <h2 class="text-center mt-4 animated fadeInLeft">إدارة المستخدمين</h2>
     <div class="row">
         <div class="col-md-4 col-lg-3">
             @php $active = 'users'; @endphp

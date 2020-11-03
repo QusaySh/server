@@ -12,8 +12,8 @@
                            data-caption="{{ $user->name }}"
                            data-group=""
                            href="{{$user->facebook_id != null ? $user->avatar : asset("avatar") . "/" . $user->avatar }}"
-                        ><img class="rounded-circle animated rollIn" width="90" height="90" src="{{ $user->facebook_id != null ? $user->avatar : asset("avatar") . "/" . $user->avatar }}" /></a>
-                    <h3 class="mt-3 animated bounceInLeft">{{ $user->name }}</h3>
+                        ><img class="rounded-circle" width="90" height="90" src="{{ $user->facebook_id != null ? $user->avatar : asset("avatar") . "/" . $user->avatar }}" /></a>
+                    <h3 class="mt-3">{{ $user->name }}</h3>
                     @if ( !empty($user->facebook) )
                         <a href="{{ $user->facebook }}" target="_blank"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
                     @endif

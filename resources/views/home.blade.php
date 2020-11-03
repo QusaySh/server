@@ -49,7 +49,7 @@
         <div class="col-md-7 mt-sm-4 m-lg-0">
             <div class="container-message">
                 @if ( $messages->isNotEmpty() )
-                <h2 class="text-center mb-4 text-secondary animated fadeInLeft"><i class="fa fa-envelope fa-fw"></i> الرسائل</h2>
+                <h2 class="text-center mb-4 text-secondary animated fadeInLeft"><i class="fa fa-comments fa-fw"></i> الرسائل</h2>
                     @if ( session()->has('success') )
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session()->get('success') }}
@@ -73,7 +73,7 @@
                         <img width="150" height="150" src="{{ asset('images/no-data.png') }}" alt="" />
                         <h3 class="mt-4">لايوجد  لديك رسائل</h3>
                         <p class="mb-1">قم بنشر الرابط الخاص بك</p>
-                        <p class="mt-0 text-info">{{ route("send_message.index", ['key' => Auth::user()->key ])}}</p>
+                        {{-- <p class="mt-0 text-info" style="font-size: 14px">{{ route("send_message.index", ['key' => Auth::user()->key ])}}</p> --}}
                     </div>
                 @endif
             </div>

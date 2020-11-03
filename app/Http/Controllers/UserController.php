@@ -99,7 +99,7 @@ class UserController extends Controller
 
             $new_name = date('Y-m-d') . "_" . time() . "." . $request->file('avatar_input')->getClientOriginalExtension();
             $tmp_image = $_FILES['avatar_input']['tmp_name'];
-
+            
             $d = $this->compress($tmp_image, 'avatar/' . $new_name, 25);
             
             $request->file('avatar_input')->store($d);
