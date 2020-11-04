@@ -14,7 +14,18 @@ use GuzzleHttp\Psr7\Message;
 class SendMessageController extends Controller
 {
     public function index($key){
-        return view('send_message.index')->with('user', User::where('key', $key)->first());
+
+        $user = User::where('key', $key)->first();
+
+        if ( !isset($_COOKIE[$key]) ) {
+            setcookie($key, $key, strtotime('+1 day'));
+            $user->views += 1;
+            $user->save();
+        }
+        return view('send_message.index')->with([
+            'user' => $user,
+            'views' => $user->views
+        ]);
     }
 
     public function send(Request $request, $id) {

@@ -12,10 +12,19 @@ class AdminController extends Controller
 {
     public function index(){
         return view('admin.index')->with([
-            'count_user'            => User::where('admin', 0)->count(),
-            'count_admin'           => User::where('admin', 1)->count(),
+            'count_user'            => User::where([
+                ['admin', '=', 0],
+                ['email_verified_at', '!=', null]
+            ])->count(),
+            'count_admin'           => User::where([
+                ['admin', '=', 1],
+                ['email_verified_at', '!=', null]
+            ])->count(),
             'count_user_facebook'   => User::where('facebook_id', '!=' , null)->count(),
-            'count_user_gmail'      => User::where('facebook_id', '=' , null)->count(),
+            'count_user_gmail'      => User::where([
+                ['facebook_id', '=' , null],
+                ['email_verified_at', '!=', null]
+            ])->count(),
 
             'count_message'         => Messages::all()->count()
         ]);
@@ -23,7 +32,7 @@ class AdminController extends Controller
 
     public function users(){
         return view('admin.users')->with([
-            'users' => User::simplePaginate(15)
+            'users' => User::where('email_verified_at', '!=', null)->simplePaginate(15)
         ]);
     }
     public function deleteUser($id){

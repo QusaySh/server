@@ -121,6 +121,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/pooper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('js/cookie.js') }}"></script>

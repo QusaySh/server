@@ -6,7 +6,7 @@
 
         <div class="col-md-8">
             <div class="container-send-message">
-
+                <p class="text-left mb-0"><span>{{ $user->views }} <i class="fa fa-eye fa-fw"></i></span></p>
                 <div class="text-center mb-3">
                     <a     data-magnify="gallery"
                            data-caption="{{ $user->name }}"
@@ -36,7 +36,7 @@
                         <form method="POST" class="" action="{{ route("send_message.send", ['id' => $user->id]) }}">
                             @csrf
                             <label for="message_form">رسالتك:</label>
-                            <textarea class="form-control @error('message') is-invalid @enderror" id="message_form" name="message" rows="3"></textarea>
+                            <textarea class="form-control @error('message') is-invalid @enderror" id="message_form" name="message" rows="3" placeholder="تكلم عني بصدق ..."></textarea>
                             <div class="invalid-feedback">
                                 @error('message')
                                     {{ $message }}

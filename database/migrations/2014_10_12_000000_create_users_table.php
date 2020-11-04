@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar', '300')->nullable()->default('avatar.png');
             $table->string('facebook', '300')->nullable();
             $table->string('instagram', '300')->nullable();
+            $table->integer('views')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

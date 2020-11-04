@@ -1,5 +1,20 @@
 $(document).ready(function () {
+
     new WOW().init();
+    $('[data-toggle="tooltip"]').tooltip(); 
+    // Copy Text
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).data('url')).select();
+        document.execCommand("copy");
+        $temp.remove();
+      }
+
+      $('.copy-url').on('click', function () {
+            copyToClipboard($(this));
+            swal("تم نسخ الرابط الخاص بك");
+      });
 
     // Show Image Before Uploaded
     function readURL(input) {

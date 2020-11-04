@@ -20,10 +20,9 @@
                 <div class="text-center mb-4">
                     <h4 class="text-center">{{ Auth::user()->name }}</h4>
                 </div>
-
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <span><b><i class="fa fa-user fa-fw"></i> رابط الإرسال الخاص بي:</b></span> <span><a href="{{ route("send_message.index", ['key' => Auth::user()->key ]) }}">{{ Auth::user()->name }}</a>.</span>
+                        <span><b><i class="fa fa-user fa-fw"></i> رابط الإرسال الخاص بي:</b></span> <span><a href="{{ route("send_message.index", ['key' => Auth::user()->key ]) }}">{{ Auth::user()->name }}</a>. <i class="fa fa-copy fa-fw float-left pointer copy-url" data-url="{{ route("send_message.index", ['key' => Auth::user()->key ]) }}" data-toggle="tooltip" data-placement="top" title="نسخ الرابط" id="copy_url"></i></span>
                     </li>
                     <li class="list-group-item">
                         <span><b><i class="fa fa-envelope fa-fw"></i> البريد الإلكتروني:</b></span> <span>{{ Auth::user()->email }}.</span>
