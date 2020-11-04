@@ -3,6 +3,11 @@
     font-family: 'El Messiri', sans-serif;
 }
 
+html{
+    position: relative;
+    min-height: 100%;
+}
+
 body{
     background-color: #f2f2f2;
 }
@@ -48,9 +53,13 @@ body{
 
 .show-password{
     position: absolute;
-    left: -10px;
-    top: 12px;
+    left: 25px;
+    top: 11px;
     color: #6d6d6d;
+}
+
+[type='password']{
+    padding-left: 35px;
 }
 
 /* end page signup */
@@ -126,6 +135,18 @@ body{
 
 /* End Search */
 
+
+/* Start Footer */
+footer{
+    background-color: black;
+    color: #fff;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+/* End Footer */
 
 /* start classess */
 

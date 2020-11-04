@@ -31,7 +31,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
-<body class="mt-5">
+<body class="mt-5 mb-5">
     
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container">
@@ -116,6 +116,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="text-center">جميع الحقوق محفوظة لموقع تكلم بصدق, مع تحيات <a href="https://www.facebook.com/qusayshartah">مطور</a> الموقع.</footer>
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery.js') }}"></script>

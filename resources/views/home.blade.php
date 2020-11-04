@@ -49,7 +49,7 @@
         <div class="col-md-7 mt-sm-4 m-lg-0">
             <div class="container-message">
                 @if ( $messages->isNotEmpty() )
-                <h2 class="text-center mb-4 text-secondary animated fadeInLeft"><i class="fa fa-comments fa-fw"></i> الرسائل</h2>
+                <h2 class="text-center mb-4 text-secondary animated zoomInLeft"><i class="fa fa-comments fa-fw"></i> الرسائل</h2>
                     @if ( session()->has('success') )
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session()->get('success') }}
@@ -61,7 +61,7 @@
 
                     @foreach ($messages as $message)
                     <div class="message mb-3 border rounded-lg wow bounceIn" data-wow-offset="30">
-                        <div><a href="{{ route("send_message.delete", ['id' => $message->id]) }}"><i class="fa fa-close text-danger fa-fw"></i></a></div>
+                        <div><a class="delete-message" href="{{ route("send_message.delete", ['id' => $message->id]) }}"><i class="fa fa-close text-danger fa-fw"></i></a></div>
                         <p class="mb-0 mt-3">{{ $message->message }}</p>
                         <hr class="mb-2" />
                         <div class="text-left date"><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</div>

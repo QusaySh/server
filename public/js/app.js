@@ -52,6 +52,25 @@ $(document).ready(function () {
           });
     });
 
+    $('.delete-message').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        swal({
+            title: "حذف رسالة",
+            text: "هل أنت متأكد من حذف الرسالة",
+            icon: "warning",
+            dangerMode: true,
+            buttons: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                window.location = url;
+            } else {
+              
+            }
+          });
+    });
+
     // End Page-home
 
     // Start Edit Profile
