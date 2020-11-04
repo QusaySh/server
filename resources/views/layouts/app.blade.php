@@ -3,7 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" href="{{ asset('images/logo.png') }}">
+    <meta property="og:url"           content="https://<?php echo $_SERVER['HTTP_HOST'] . "/send_message"; ?>" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="تكلم عني بصدق" />
+    <meta property="og:description"   content="موقع تكلم بصدق يهدف الى جعل الناس يتكلمون عنك بصدق دون معرفة الشخص المتكلم وذلك لتقبل الكلام و من غير زعل من ذلك الشخص وليتكلم بشجاعة عنك." />
+    <meta property="og:image"         content="{{ asset('images/a.jpg') }}" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

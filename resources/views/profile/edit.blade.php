@@ -76,7 +76,7 @@
                                         <label class="custom-file-label" for="avatar">اختر صورة</label>
                                     </div>
                                     <div class="row justify-content-center mb-0">
-                                        <img src="" id="show_image" style="visibility: hidden" class="col-8 mt-4 d-block" />
+                                        <img src="" id="show_image" style="visibility: hidden" class="col-sm-12 col-md-8 mt-4 d-block" />
                                     </div>
                                 </div>
                             </div>
