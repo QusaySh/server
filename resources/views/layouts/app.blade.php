@@ -55,6 +55,11 @@
                         </li>
                     @endif
                 @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profile.edit') }}">
+                            <i class="fa fa-user fa-fw"></i> {{ __('ملفي الشخصي') }}
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ __('التحكم') }}
@@ -66,9 +71,6 @@
                                     <i class="fa fa-dashboard fa-fw"></i> {{ __('لوحة التحكم') }}
                                 </a>
                             @endif
-                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                <i class="fa fa-user fa-fw"></i> {{ __('ملفي الشخصي') }}
-                            </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

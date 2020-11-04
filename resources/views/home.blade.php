@@ -15,7 +15,8 @@
                            data-group=""
                            href="{{Auth::user()->facebook_id != null ? Auth::user()->avatar : asset("avatar") . "/" . Auth::user()->avatar }}"
                         ><img width="80" height="80" class="rounded-circle"
-                    src="{{ Auth::user()->facebook_id != null ? Auth::user()->avatar : asset("avatar") . "/" . Auth::user()->avatar }}" alt="" /></a>
+                    src="{{ Auth::user()->facebook_id != null ? Auth::user()->avatar : asset("avatar") . "/" . Auth::user()->avatar }}" alt="" />
+                </a>
                 </div>
                 <div class="text-center mb-4">
                     <h4 class="text-center">{{ Auth::user()->name }}</h4>
