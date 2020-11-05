@@ -57,7 +57,7 @@
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('profile.edit') }}">
-                            <i class="fa fa-user fa-fw"></i> {{ __('ملفي الشخصي') }}
+                            <i class="fa fa-user-circle fa-fw"></i> {{ __('ملفي الشخصي') }}
                         </a>
                     </li>
                     <li class="nav-item dropdown">

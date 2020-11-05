@@ -32,7 +32,7 @@ class AdminController extends Controller
 
     public function users(){
         return view('admin.users')->with([
-            'users' => User::where('email_verified_at', '!=', null)->simplePaginate(15)
+            'users' => User::simplePaginate(15)
         ]);
     }
     public function deleteUser($id){

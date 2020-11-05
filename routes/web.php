@@ -18,7 +18,7 @@ Route::get('auth/facebook', 'Auth\LoginController@redirectToFacebook')->name('lo
 Route::get('auth/facebook/callback', 'Auth\LoginController@handleFacebookCallback');
 
 // Profile
-Route::group(['prefix' => 'profile', 'middleware' => 'auth', 'middleware' => 'verified'], function () {
+Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'verified']], function () {
 
     Route::get('edit', 'UserController@edit')->name('profile.edit');
     Route::post('update', 'UserController@update')->name('profile.update');

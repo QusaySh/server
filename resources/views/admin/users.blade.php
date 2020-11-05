@@ -32,6 +32,7 @@
                         <th scope="col">فيسبوك</th>
                         <th scope="col">إنستغرام</th>
                         <th scope="col">عدد الرسائل</th>
+                        <th scope="col">حالة الحساب</th>
                         <th scope="col">تاريخ الإنشاء</th>
                         <th scope="col">التحكم</th>
                     </tr>
@@ -48,6 +49,7 @@
                                 <td>{!! !empty($user->facebook) ? '<a href="' . $user->facebook . '"><i class="fa fa-facebook-square fa-fw"></i></a>' : '' !!}</td>
                                 <td>{!! !empty($user->instagram) ? '<a href="' . $user->instagram . '"><i class="fa fa-instagram fa-fw"></i></a>' : '' !!}</td>
                                 <td>{{ $user->messages->count() }}</td>
+                                <td>{{ $user->email_verified_at == null ? 'غير مفعل' : 'مفعل' }}</td>
                                 <td>{{ $user->created_at->diffForHumans() }}</td>
                                 <td>
                                     <a class="btn btn-info" href="{{ route('admin.rules', ['id' => $user->id]) }}" role="button"><i class="fa fa-shield fa-fw"></i></a>
