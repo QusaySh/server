@@ -9,7 +9,7 @@
         
         @if ( $users->isNotEmpty() )
             @foreach ($users as $user)                
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="media border rounded-lg mb-3 wow bounceIn" data-wow-offset="30">
                         <a data-magnify="gallery"
                            data-caption="{{ $user->name }}"
@@ -19,12 +19,19 @@
                         <div class="media-body">
                         <h5 class="mt-0">{{ $user->name }}</h5>
                             <div>
-                                <a href="{{ $user->facebook }}" target="_blank"><i class="fa fa-facebook-square fa-fw fa-2x" @if ( empty($user->facebook) )
-                                    style="visibility: hidden"
-                                @endif></i></a>
-                                <a href="{{ $user->instagram }}" target="_blank"><i class="fa fa-instagram fa-fw fa-2x" @if ( empty($user->instagram) )
-                                    style="visibility: hidden"
-                                @endif></i></a>
+    
+                                @if ( empty($user->instagram) )
+                                <a data-toggle="tooltip" data-placement="top" title="لم يقم بضبط الرابط"><i class="fa fa-facebook-square text-secondary fa-fw fa-2x"></i></a>
+                                @else
+                                <a href="{{ $user->facebook }}" target="_blank"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
+                                @endif
+                                
+                                @if ( empty($user->instagram) )
+                                    <a data-toggle="tooltip" data-placement="top" title="لم يقم بضبط الرابط"><i class="fa fa-instagram text-secondary fa-fw fa-2x"></i></a>
+                                @else
+                                    <a href="{{ $user->instagram }}" target="_blank"><i class="fa fa-instagram fa-fw fa-2x"></i></a>
+                                @endif
+
                             </div>
                             <hr />
                             <div class="text-left">

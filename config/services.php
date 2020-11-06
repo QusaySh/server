@@ -33,7 +33,7 @@ return [
     'facebook' => [
         'client_id' => '1507965482721071',
         'client_secret' => 'a06488a21853853707a057290b7ddeb8',
-        'redirect' => 'http://localhost/auth/facebook/callback',
+        'redirect' => 'http://' . $_SERVER['HTTP_HOST'] . '/auth/facebook/callback',
       ],
 
 ];

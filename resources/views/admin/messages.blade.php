@@ -12,11 +12,23 @@
         </div>
 
         <div class="col-md-8 col-lg-9">
+            <div class="col-md-6">
+                <form action="{{ route('admin.messages') }}" method="GET">
+                    <div class="input-group mb-2 mt-5">
+                        <input type="text" class="form-control" autocomplete="off" name="user_id" placeholder="أدخل رقم المعرف للشخص المراد جلب بياناته" aria-label="أدخل رقم المعرف للشخص المراد جلب بياناته" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info" type="submit" id="button-addon2">بحث</button>
+                          <a class="btn btn-outline-primary" href="{{ route('admin.messages') }}">الكل</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
             @if ( $messages->isNotEmpty() )
                 <table class="table mt-4 table-responsive-sm table-hover text-center">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">المعرف</th>
                         <th scope="col">الرسالة</th>
                         <th scope="col">المرسل إليه</th>
                         <th scope="col">تاريخ الإرسال</th>
@@ -28,6 +40,7 @@
                         @foreach ($messages as $message)
                             <tr>
                                 <td scope="row">{{ $i }}</td>
+                                <td scope="row">{{ $message->users->id }}</td>
                                 <td>{{ $message->message }}</td>
                                 <td>{{ $message->users->name }}</td>
                                 <td>{{ $message->created_at->diffForHumans() }}</td>
@@ -40,7 +53,11 @@
                     </tbody>
                 </table>
                 <div class="row justify-content-center mt-4">
-                    <p>{{ $messages->links() }}</p>
+                    @if ( isset($_GET['user_id']) )    
+                        <p>{{ $messages->appends(['user_id' => $_GET['user_id']])->links() }}</p>
+                    @else
+                        <p>{{ $messages->links() }}</p>
+                    @endif
                 </div>
             @else
                 <div class="row justify-content-center">

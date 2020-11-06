@@ -67,7 +67,7 @@ class LoginController extends Controller
                     'email_verified_at' => date('Y-m-d h:i:s'),
                     'show_account' => 'on',
                     'facebook_id' => $user->id,
-                    'avatar' => $user->avatar_original
+                    'avatar' => $user->avatar
                 ]);
                 Auth::login($newUser);
                 return redirect()->back();

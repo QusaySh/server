@@ -32,7 +32,7 @@ class AdminController extends Controller
 
     public function users(){
         return view('admin.users')->with([
-            'users' => User::simplePaginate(15)
+            'users' => User::orderBy('created_at', 'DESC')->simplePaginate(15)
         ]);
     }
     public function deleteUser($id){
@@ -62,9 +62,18 @@ class AdminController extends Controller
         return back();
     }
 
-    public function messages(){
-        return view('admin.messages')->with([
-            'messages' => Messages::simplePaginate(15)
-        ]);
+    public function messages(Request $request){
+
+        // عند لبحث عن رسائل شخص معين
+        if ( isset($request->user_id) ) {
+            return view('admin.messages')->with([
+                'messages' => Messages::where('user_id', $request->user_id)->orderBy('created_at', 'DESC')->simplePaginate(15)
+            ]);
+        } else {
+            return view('admin.messages')->with([
+                'messages' => Messages::orderBy('created_at', 'DESC')->simplePaginate(15)
+            ]);
+        }
+        
     }
 }

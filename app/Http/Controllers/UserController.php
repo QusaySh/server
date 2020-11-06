@@ -119,6 +119,7 @@ class UserController extends Controller
         // set url facebook and instagram
         $user->facebook = $request->facebook;
         $user->instagram = $request->instagram;
+        $user->email_verified_at = $user->email_verified_at;
 
         $user->save();
         return back()->with('success_message', 'تم حفظ البيانات بنجاح');
