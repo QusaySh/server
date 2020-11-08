@@ -29,7 +29,7 @@
                         <span><b><i class="fa fa-envelope fa-fw"></i> البريد الإلكتروني:</b></span> <span>{{ Auth::user()->email }}.</span>
                     </li>
                     <li class="list-group-item">
-                        <span><b><i class="fa fa-comments fa-fw"></i> عدد الرسائل:</b></span> <span>[ {{ Auth::user()->messages->count() }} ] رسالة.</span>
+                        <span><b><i class="fa fa-comments fa-fw"></i> عدد الرسائل:</b></span> <span>[ {{ $count_message }} ] رسالة.</span>
                     </li>
                     <li class="list-group-item">
                         <span><b><i class="fa fa-sign-in fa-fw"></i> طريقة الدخول:</b></span> <span>{{ Auth::user()->facebook_id == null ? 'Email' : 'Facebook' }}.</span>
@@ -64,7 +64,11 @@
                         <div><a class="delete-message" href="{{ route("send_message.delete", ['id' => $message->id]) }}"><i class="fa fa-close text-danger fa-fw"></i></a></div>
                         <p class="mb-0 mt-3">{{ $message->message }}</p>
                         <hr class="mb-2" />
-                        <div class="text-left date"><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</div>
+                        <div class="date">
+                            <span class="float-right pointer text-info get-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#reply_model"><i class="fa fa-reply fa-fw"></i> رد</span>
+                            <span class="float-left"><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</span>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                     @endforeach
 
@@ -82,4 +86,43 @@
 
     </div>
 </div>
+
+<!-- this is a model replay -->
+  <!-- Modal -->
+  <div class="modal fade" id="reply_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">رد على رسالة</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex justify-content-center loading-reply">
+                <div class="spinner-border text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            <form style="display: none">
+                @csrf
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label text-info ">الرسالة:</label>
+                  <p class="text-message"></p>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label text-info">الرد:</label>
+                  <textarea class="form-control" id="message-text" placeholder="أكتب رد على هذه الرسالة..."></textarea>
+                  <div class="invalid-feedback"></div>
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">إغلاق</button>
+          <button type="button" class="btn btn-outline-info reply-message" data-uid="{{ Auth::user()->id }}">رد</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection

@@ -12,23 +12,36 @@
         </div>
 
         <div class="col-md-8 col-lg-9">
-            <div class="col-md-6">
-                <form action="{{ route('admin.messages') }}" method="GET">
-                    <div class="input-group mb-2 mt-5">
-                        <input type="text" class="form-control" autocomplete="off" name="user_id" placeholder="أدخل رقم المعرف للشخص المراد جلب بياناته" aria-label="أدخل رقم المعرف للشخص المراد جلب بياناته" aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-info" type="submit" id="button-addon2">بحث</button>
-                          <a class="btn btn-outline-primary" href="{{ route('admin.messages') }}">الكل</a>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="{{ route('admin.messages') }}" method="GET">
+                        <div class="input-group mb-2 mt-4">
+                            <input type="text" class="form-control" autocomplete="off" name="user_id" placeholder="أدخل رقم المعرف للشخص المراد جلب بياناته" aria-label="أدخل رقم المعرف للشخص المراد جلب بياناته" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-info" type="submit" id="button-addon2">بحث</button>
+                              <a class="btn btn-outline-primary" href="{{ route('admin.messages') }}">الكل</a>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <form action="{{ route('admin.messages') }}" method="GET">
+                        <div class="input-group mb-2 mt-4">
+                            <input type="text" class="form-control" autocomplete="off" name="message_id" placeholder="أدخل معرف الرسالة المراد اظهار ردودها" aria-label="أدخل معرف الرسالة المراد اظهار ردودها" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-info" type="submit" id="button-addon2">بحث</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             @if ( $messages->isNotEmpty() )
                 <table class="table mt-4 table-responsive-sm table-hover text-center">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">المعرف</th>
+                        <th scope="col">معرف المستخدم</th>
+                        <th scope="col">معرف الرسالة</th>
                         <th scope="col">الرسالة</th>
                         <th scope="col">المرسل إليه</th>
                         <th scope="col">تاريخ الإرسال</th>
@@ -41,6 +54,7 @@
                             <tr>
                                 <td scope="row">{{ $i }}</td>
                                 <td scope="row">{{ $message->users->id }}</td>
+                                <td scope="row">{{ $message->id }}</td>
                                 <td>{{ $message->message }}</td>
                                 <td>{{ $message->users->name }}</td>
                                 <td>{{ $message->created_at->diffForHumans() }}</td>
@@ -53,8 +67,10 @@
                     </tbody>
                 </table>
                 <div class="row justify-content-center mt-4">
-                    @if ( isset($_GET['user_id']) )    
+                    @if ( isset($_GET['user_id']) )
                         <p>{{ $messages->appends(['user_id' => $_GET['user_id']])->links() }}</p>
+                    @elseif ( isset($_GET['message_id']) )
+                        <p>{{ $messages->appends(['message_id' => $_GET['message_id']])->links() }}</p>
                     @else
                         <p>{{ $messages->links() }}</p>
                     @endif

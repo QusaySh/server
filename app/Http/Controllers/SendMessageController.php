@@ -51,6 +51,28 @@ class SendMessageController extends Controller
 
     }
 
+    // get reply messgae
+    public function get_reply($message_id) {
+        $message = Messages::where('id', $message_id)->first();
+        return response()->json(array('get_reply' => $message), 200);
+    }
+
+    public function reply_message(Request $request) {
+        $this->validate($request, [
+            'message'   => 'required'
+        ], [
+            'message.required'  => 'يجب ملئ الحقل',
+        ]);
+
+        Messages::create([
+            'message' => $request->message,
+            'user_id'   => $request->uid,
+            'message_parent'    => $request->mid
+        ]);
+
+        return response()->json();
+    }
+
     public function destroy($id) {
         $messages = Messages::find($id);
         $messages->destroy($id);

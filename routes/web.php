@@ -33,6 +33,10 @@ Route::group(['prefix' => 'send_message'], function () {
     Route::post('/send/{id}', 'SendMessageController@send')->name('send_message.send');
     Route::get('/delete/{id}', 'SendMessageController@destroy')->name('send_message.delete');
 
+    // get reply message
+    Route::get('/get_reply/{message_id}', 'SendMessageController@get_reply');
+    Route::post('/reply_message', 'SendMessageController@reply_message');
+
 });
 
 // Send Message

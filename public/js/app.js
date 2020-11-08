@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     new WOW().init();
-    $('[data-toggle="tooltip"]').tooltip(); 
     // Copy Text
     function copyToClipboard(element) {
         var $temp = $("<input>");
@@ -86,12 +87,59 @@ $(document).ready(function () {
           });
     });
 
+    $('.get-reply').on('click', function () {
+        var message_id = $(this).data('mid');
+        $('.reply-message').data('mid', $(this).data('mid'));
+        $('#reply_model .spinner-border').show();
+        $('#reply_model form').hide();
+        $.ajax({
+          type:'GET',
+          url:'/send_message/get_reply/' + message_id,
+          data:{message_id: message_id},
+          beforeSend: function () {
+              
+          },
+          success:function(data) {
+              $('#reply_model .text-message').text(data.get_reply.message);
+              $('#reply_model .spinner-border').hide();
+              $('#reply_model form').show();
+              $('#reply_model textarea').val('').removeClass('is-invalid');
+          }
+      });
+    });
+
+    $('.reply-message').on('click', function () {
+        var mid = $(this).data('mid'),
+            uid = $(this).data('uid'),
+            _token = $("#reply_model input[name='_token']").val(),
+            message = $('#reply_model textarea').val();
+
+        $.ajax({
+          type:'POST',
+          url:'send_message/reply_message',
+          data:{_token: _token, message: message, mid: mid, uid: uid},
+          beforeSend: function () {
+              
+          },
+          success:function(data) {
+            if ( $.isEmptyObject(data.error) ) {
+              swal("نجاح", "تم إرسال الرد بنجاح", "success");
+              $('#reply_model textarea').removeClass('is-invalid');
+            }
+          },
+
+          error: function (response) {
+            $('#reply_model textarea').addClass('is-invalid').next('.invalid-feedback').text(response.responseJSON.errors.message);
+          }
+      });
+
+    });
+
     // End Page-home
 
     // Start Edit Profile
     $(".page-profile #avatar").on('change', function(){
         $('#show_image').css('visibility', 'visible');
-        console.log(this);
         readURL(this);
     });
     // End Edit Profile
