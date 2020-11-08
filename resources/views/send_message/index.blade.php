@@ -60,16 +60,18 @@
                             <div class="media">
                                 <img class="rounded-circle" src="{{ asset('avatar/avatar.png') }}" width="50" height="50" class="mr-3" alt="...">
                                 <div class="media-body mr-2">
-                                <h5 class="mt-0">مجهول</h5>
+                                <h5 class="mt-0 mb-0">مجهول</h5>
+                                <p class="mt-0 mb-3 mr-2 text-secondary time-reply">{{ $message->created_at->diffForHumans() }}</p>
                                 {{ $message->message }}
-                                
+                                <hr>
                                 @foreach ($message->reply as $reply)
                                     <div class="media mt-3">
                                         <a class="mr-0">
                                         <img class="rounded-circle" src="{{$message->users->facebook_id != null ? $message->users->avatar : asset("avatar") . "/" . $message->users->avatar }}" width="50" height="50" class="mr-3" alt="...">
                                         </a>
                                         <div class="media-body mr-2">
-                                        <h5 class="mt-0">قصي الشرتح</h5>
+                                        <h5 class="mt-0 mb-0">قصي الشرتح</h5>
+                                        <p class="mt-0 mb-3 mr-2 text-secondary time-reply">{{ $reply->created_at->diffForHumans() }}</p>
                                         {{ $reply->reply }}
                                         </div>
                                     </div>
