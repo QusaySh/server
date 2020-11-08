@@ -9,6 +9,7 @@ use App\Mail\MailtrapExample;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\HelloUser;
+use App\Reply;
 use GuzzleHttp\Psr7\Message;
 
 class SendMessageController extends Controller
@@ -17,14 +18,16 @@ class SendMessageController extends Controller
 
         $user = User::where('key', $key)->first();
 
-        if ( !isset($_COOKIE[$key]) ) {
+        if ( !isset($_COOKIE[$key]) ) { // من أجل المشاهدة
             setcookie($key, $key, strtotime('+1 day'));
             $user->views += 1;
             $user->save();
         }
+
         return view('send_message.index')->with([
             'user' => $user,
-            'views' => $user->views
+            'views' => $user->views,
+            'message_show' => Messages::where('show_message', 1)->orderBy('id', 'DESC')->get()
         ]);
     }
 
@@ -64,11 +67,14 @@ class SendMessageController extends Controller
             'message.required'  => 'يجب ملئ الحقل',
         ]);
 
-        Messages::create([
-            'message' => $request->message,
-            'user_id'   => $request->uid,
-            'message_parent'    => $request->mid
+        reply::create([
+            'reply' => $request->message,
+            'message_id'   => $request->mid
         ]);
+
+        $message = Messages::find($request->mid);
+        $message->show_message = 1;
+        $message->save();
 
         return response()->json();
     }
@@ -76,6 +82,7 @@ class SendMessageController extends Controller
     public function destroy($id) {
         $messages = Messages::find($id);
         $messages->destroy($id);
+        $messages->reply()->delete();
         return back()->with('success', 'تم حذف الرسالة بنجاح');
     }
 

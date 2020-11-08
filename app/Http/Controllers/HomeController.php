@@ -29,14 +29,8 @@ class HomeController extends Controller
     {
         return view('home')->with([
             'messages'  => Messages::where([
-                ['user_id' , Auth::user()->id],
-                ['message_parent', 0]
-            ])->orderBy('created_at', 'DESC')->get(),
-            
-            'count_message'  => Messages::where([
-                ['user_id' , Auth::user()->id],
-                ['message_parent', 0]
-            ])->orderBy('created_at', 'DESC')->count(),
+                ['user_id' , Auth::user()->id]
+            ])->orderBy('created_at', 'DESC')->get()
 
         ]);
     }

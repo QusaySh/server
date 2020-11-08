@@ -29,7 +29,7 @@
                         <span><b><i class="fa fa-envelope fa-fw"></i> البريد الإلكتروني:</b></span> <span>{{ Auth::user()->email }}.</span>
                     </li>
                     <li class="list-group-item">
-                        <span><b><i class="fa fa-comments fa-fw"></i> عدد الرسائل:</b></span> <span>[ {{ $count_message }} ] رسالة.</span>
+                        <span><b><i class="fa fa-comments fa-fw"></i> عدد الرسائل:</b></span> <span>[ {{ $messages->count() }} ] رسالة.</span>
                     </li>
                     <li class="list-group-item">
                         <span><b><i class="fa fa-sign-in fa-fw"></i> طريقة الدخول:</b></span> <span>{{ Auth::user()->facebook_id == null ? 'Email' : 'Facebook' }}.</span>

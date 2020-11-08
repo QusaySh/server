@@ -51,6 +51,36 @@
 
             </div>
         </div>
+        @if ( $message_show->isNotEmpty() )
+            <div class="col-md-8 mt-4">
+                <h2 class="mb-3 text-secondary">الردود</h2>
+                @foreach ($message_show as $message)
+                    <div class="card mb-1">
+                        <div class="card-body">
+                            <div class="media">
+                                <img class="rounded-circle" src="{{ asset('avatar/avatar.png') }}" width="50" height="50" class="mr-3" alt="...">
+                                <div class="media-body mr-2">
+                                <h5 class="mt-0">مجهول</h5>
+                                {{ $message->message }}
+                                
+                                @foreach ($message->reply as $reply)
+                                    <div class="media mt-3">
+                                        <a class="mr-0">
+                                        <img class="rounded-circle" src="{{$message->users->facebook_id != null ? $message->users->avatar : asset("avatar") . "/" . $message->users->avatar }}" width="50" height="50" class="mr-3" alt="...">
+                                        </a>
+                                        <div class="media-body mr-2">
+                                        <h5 class="mt-0">قصي الشرتح</h5>
+                                        {{ $reply->reply }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
 
     </div>
 </div>

@@ -59,6 +59,7 @@ class AdminController extends Controller
     public function deleteMessage($id){
         $message = Messages::find($id);
         $message->delete($message->id);
+        $message->reply()->delete();
         return back();
     }
 
