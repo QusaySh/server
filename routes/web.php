@@ -31,11 +31,13 @@ Route::group(['prefix' => 'send_message'], function () {
 
     Route::get('/{key}', 'SendMessageController@index')->name('send_message.index');
     Route::post('/send/{id}', 'SendMessageController@send')->name('send_message.send');
-    Route::get('/delete/{id}', 'SendMessageController@destroy')->name('send_message.delete');
+    Route::get('/delete/{id}', 'SendMessageController@destroy')->name('send_message.delete')->middleware('auth');
 
     // get reply message
-    Route::get('/get_reply/{message_id}', 'SendMessageController@get_reply');
-    Route::post('/reply_message', 'SendMessageController@reply_message');
+    Route::get('/get_reply/{message_id}', 'SendMessageController@get_reply')->middleware('auth');
+    Route::post('/reply_message', 'SendMessageController@reply_message')->middleware('auth');
+    Route::get('/show_reply/{message_id}', 'SendMessageController@show_reply')->middleware('auth');
+    Route::get('/delete_reply/{reply_id}', 'SendMessageController@delete_reply')->middleware('auth');
 
 });
 

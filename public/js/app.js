@@ -110,14 +110,13 @@ $(document).ready(function () {
 
     $('.reply-message').on('click', function () {
         var mid = $(this).data('mid'),
-            uid = $(this).data('uid'),
             _token = $("#reply_model input[name='_token']").val(),
             message = $('#reply_model textarea').val();
 
         $.ajax({
           type:'POST',
           url:'send_message/reply_message',
-          data:{_token: _token, message: message, mid: mid, uid: uid},
+          data:{_token: _token, message: message, mid: mid},
           beforeSend: function () {
               
           },
@@ -134,6 +133,42 @@ $(document).ready(function () {
       });
 
     });
+
+    $('.show-reply').on('click', function () {
+      var message_id = $(this).data('mid');
+
+      $.ajax({
+        type:'GET',
+        url:'/send_message/show_reply/' + message_id,
+        data:{message_id: message_id},
+        beforeSend: function () {
+          $('#show_reply_model .loading-reply-1').show();
+          $('#show_reply_model .modal-body .body-reply').text('');            
+        },
+        success:function(data) {
+            $('#show_reply_model .modal-body .body-reply').html(data.show_reply);
+            $('#show_reply_model .loading-reply-1').hide();
+        }
+    });
+  });
+
+  $('body').on('click', '.delete-reply', function () {
+    var reply_id = $(this).data('rid'),
+        btn = $(this);
+
+    $.ajax({
+      type:'GET',
+      url:'/send_message/delete_reply/' + reply_id,
+      data:{reply_id: reply_id},
+      beforeSend: function () {
+        btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+      },
+      success:function(data) {
+        btn.parents('.list-group').fadeOut();
+        btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+      }
+  });
+});
 
     // End Page-home
 

@@ -64,9 +64,10 @@
                         <div><a class="delete-message" href="{{ route("send_message.delete", ['id' => $message->id]) }}"><i class="fa fa-close text-danger fa-fw"></i></a></div>
                         <p class="mb-0 mt-3">{{ $message->message }}</p>
                         <hr class="mb-2" />
-                        <div class="date">
-                            <span class="float-right pointer text-info get-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#reply_model"><i class="fa fa-reply fa-fw"></i> رد</span>
-                            <span class="float-left"><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</span>
+                        <div class="date row justify-content-between">
+                            <span class="pointer text-info get-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#reply_model"><i class="fa fa-reply fa-fw"></i> رد</span>
+                            <span class="pointer text-success show-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#show_reply_model"><i class="fa fa-eye fa-fw"></i> عرض الردود</span>
+                            <span class=""><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -119,7 +120,32 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">إغلاق</button>
-          <button type="button" class="btn btn-outline-info reply-message" data-uid="{{ Auth::user()->id }}">رد</button>
+          <button type="button" class="btn btn-outline-info reply-message">رد</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- this is a model show replay -->
+  <!-- Modal -->
+  <div class="modal fade" id="show_reply_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">عرض الردود</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex justify-content-center loading-reply">
+                <div class="spinner-border loading-reply-1 text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="body-reply"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">إغلاق</button>
         </div>
       </div>
     </div>

@@ -79,6 +79,36 @@ class SendMessageController extends Controller
         return response()->json();
     }
 
+    // show reply messgae
+    public function show_reply($message_id) {
+        $messages = Reply::where('message_id', $message_id)->get();
+        $show_reply = "";
+        if ( $messages->count() > 0 ) {
+            foreach ( $messages as $message ) {
+                $show_reply .= 
+                '<ul class="list-group mb-2">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        ' . $message->reply . '
+                        <span class="text-danger pointer delete-reply" data-rid="' . $message->id . '"><i class="fa fa-fw fa-close"></i></span>
+                    </li>
+              </ul>';
+            }
+        } else {
+            $show_reply .= 
+            '<div class="alert alert-primary" role="alert">
+                لايوجد ردود لهذه الرسالة
+            </div>';
+        }
+        return response()->json(array('show_reply' => $show_reply), 200);
+    }
+    // delete a reply
+    public function delete_reply($reply_id) {
+        $reply = Reply::find($reply_id);
+        $reply->delete($reply_id);
+        return response()->json();
+    }
+
+    // delete a message and reply
     public function destroy($id) {
         $messages = Messages::find($id);
         $messages->destroy($id);
