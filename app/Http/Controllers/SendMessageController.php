@@ -69,7 +69,7 @@ class SendMessageController extends Controller
 
         reply::create([
             'reply' => $request->message,
-            'message_id'   => $request->mid
+            'message_id'   => strip_tags($request->mid)
         ]);
 
         $message = Messages::find($request->mid);
