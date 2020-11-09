@@ -24,16 +24,6 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
-                    <form action="{{ route('admin.messages') }}" method="GET">
-                        <div class="input-group mb-2 mt-4">
-                            <input type="text" class="form-control" autocomplete="off" name="message_id" placeholder="أدخل معرف الرسالة المراد اظهار ردودها" aria-label="أدخل معرف الرسالة المراد اظهار ردودها" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-info" type="submit" id="button-addon2">بحث</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
             @if ( $messages->isNotEmpty() )
                 <table class="table mt-4 table-responsive-sm table-hover text-center">
@@ -45,6 +35,7 @@
                         <th scope="col">الرسالة</th>
                         <th scope="col">المرسل إليه</th>
                         <th scope="col">تاريخ الإرسال</th>
+                        <th scope="col">الردود</th>
                         <th scope="col">التحكم</th>
                     </tr>
                     </thead>
@@ -58,6 +49,7 @@
                                 <td>{{ $message->message }}</td>
                                 <td>{{ $message->users->name }}</td>
                                 <td>{{ $message->created_at->diffForHumans() }}</td>
+                                <td><button type="button" class="btn btn-primary show-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#show_reply_model"><i class="fa fa-fw fa-eye"></i></button></td>
                                 <td>
                                     <a class="btn btn-danger" href="{{ route('admin.deleteMessage', ['id' => $message->id]) }}" role="button"><i class="fa fa-close fa-fw"></i></a>
                                 </td>
@@ -86,5 +78,30 @@
             @endif
         </div>
     </div>
+<!-- this is a model show replay -->
+  <!-- Modal -->
+  <div class="modal fade" id="show_reply_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">عرض الردود</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex justify-content-center loading-reply">
+                <div class="spinner-border loading-reply-1 text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="body-reply"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">إغلاق</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection

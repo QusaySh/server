@@ -37,7 +37,7 @@ Route::group(['prefix' => 'send_message'], function () {
     Route::get('/get_reply/{message_id}', 'SendMessageController@get_reply')->middleware('auth');
     Route::post('/reply_message', 'SendMessageController@reply_message')->middleware('auth');
     Route::get('/show_reply/{message_id}', 'SendMessageController@show_reply')->middleware('auth');
-    Route::get('/delete_reply/{reply_id}', 'SendMessageController@delete_reply')->middleware('auth');
+    Route::get('/delete_reply/{reply_id}/{message_id}', 'SendMessageController@delete_reply')->middleware('auth');
 
 });
 

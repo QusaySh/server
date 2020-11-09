@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Messages;
+use App\Reply;
 use App\SendMessage;
 use App\User;
 use Illuminate\Http\Request;
@@ -69,17 +70,16 @@ class AdminController extends Controller
         if ( isset($request->user_id) ) {
             return view('admin.messages')->with([
                 'messages' => Messages::where([
-                    ['user_id', $request->user_id],
-                    ['message_parent', 0]
+                    ['user_id', $request->user_id]
                 ])->orderBy('created_at', 'DESC')->simplePaginate(15)
             ]);
         } else if ( isset($request->message_id) ) {
             return view('admin.messages')->with([
-                'messages' => Messages::where('message_parent', $request->message_id)->orderBy('created_at', 'DESC')->simplePaginate(15)
+                'messages' => Reply::where('message_id', $request->message_id)->orderBy('created_at', 'DESC')->simplePaginate(15)
             ]);
         } else {
             return view('admin.messages')->with([
-                'messages' => Messages::where('message_parent', 0)->orderBy('created_at', 'DESC')->simplePaginate(15)
+                'messages' => Messages::orderBy('created_at', 'DESC')->simplePaginate(15)
             ]);
         }
         

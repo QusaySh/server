@@ -89,7 +89,7 @@ class SendMessageController extends Controller
                 '<ul class="list-group mb-2">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         ' . $message->reply . '
-                        <span class="text-danger pointer delete-reply" data-rid="' . $message->id . '"><i class="fa fa-fw fa-close"></i></span>
+                        <span class="text-danger pointer delete-reply" data-rid="' . $message->id . '" data-mid="' . $message->message_id . '"><i class="fa fa-fw fa-close"></i></span>
                     </li>
               </ul>';
             }
@@ -102,8 +102,15 @@ class SendMessageController extends Controller
         return response()->json(array('show_reply' => $show_reply), 200);
     }
     // delete a reply
-    public function delete_reply($reply_id) {
-        $reply = Reply::find($reply_id);
+    public function delete_reply($reply_id, $message_id) {
+        $count_reply_for_message = Reply::where('message_id', $message_id)->count();
+
+        if ( $count_reply_for_message == 1 ) {
+            $message = Messages::where('id', $message_id)->first();
+            $message->show_message = 0;
+            $message->save();
+        }
+        $reply = Reply::find($reply_id)->first();
         $reply->delete($reply_id);
         return response()->json();
     }

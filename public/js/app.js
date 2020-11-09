@@ -95,7 +95,6 @@ $(document).ready(function () {
         $.ajax({
           type:'GET',
           url:'/send_message/get_reply/' + message_id,
-          data:{message_id: message_id},
           beforeSend: function () {
               
           },
@@ -140,7 +139,6 @@ $(document).ready(function () {
       $.ajax({
         type:'GET',
         url:'/send_message/show_reply/' + message_id,
-        data:{message_id: message_id},
         beforeSend: function () {
           $('#show_reply_model .loading-reply-1').show();
           $('#show_reply_model .modal-body .body-reply').text('');            
@@ -154,18 +152,19 @@ $(document).ready(function () {
 
   $('body').on('click', '.delete-reply', function () {
     var reply_id = $(this).data('rid'),
+        message_id = $(this).data('mid'),
         btn = $(this);
 
     $.ajax({
       type:'GET',
-      url:'/send_message/delete_reply/' + reply_id,
-      data:{reply_id: reply_id},
+      url:'/send_message/delete_reply/' + reply_id + "/" + message_id,
       beforeSend: function () {
         btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
       },
       success:function(data) {
         btn.parents('.list-group').fadeOut();
         btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+        console.log(data);
       }
   });
 });
