@@ -66,7 +66,7 @@
                         <hr class="mb-2" />
                         <div class="date row justify-content-between">
                             <span class="pointer text-info get-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#reply_model"><i class="fa fa-reply fa-fw"></i> رد</span>
-                            <span class="pointer text-success show-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#show_reply_model"><i class="fa fa-eye fa-fw"></i> عرض الردود ({{ $message->reply->count() }})</span>
+                            <span class="pointer text-success show-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#show_reply_model"><i class="fa fa-eye fa-fw"></i> عرض الردود (<span class="count-reply">{{ $message->reply->count() }}</span>)</span>
                             <span class=""><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</span>
                         </div>
                         <div class="clearfix"></div>

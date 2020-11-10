@@ -55,11 +55,13 @@ class SendMessageController extends Controller
     }
 
     // get reply messgae
+    // عند الضغط على رد
     public function get_reply($message_id) {
         $message = Messages::where('id', $message_id)->first();
         return response()->json(array('get_reply' => $message), 200);
     }
 
+    // عند الضغط على ارسال الرد
     public function reply_message(Request $request) {
         $this->validate($request, [
             'message'   => 'required'
@@ -76,7 +78,9 @@ class SendMessageController extends Controller
         $message->show_message = 1;
         $message->save();
 
-        return response()->json();
+        $count_reply = Reply::where('message_id', $request->mid)->count();
+
+        return response()->json(['count_reply' => $count_reply]);
     }
 
     // show reply messgae
@@ -110,9 +114,12 @@ class SendMessageController extends Controller
             $message->show_message = 0;
             $message->save();
         }
-        $reply = Reply::find($reply_id)->first();
+        $reply = Reply::find($reply_id);
         $reply->delete($reply_id);
-        return response()->json();
+
+        $count_reply = Reply::where('message_id', $message_id)->count();
+
+        return response()->json(['count_reply' => $count_reply]);
     }
 
     // delete a message and reply

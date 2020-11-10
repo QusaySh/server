@@ -87,7 +87,11 @@ $(document).ready(function () {
           });
     });
 
+    // عند الضغط على رد
+    var show_count_reply = ""; // لوضع عنصر ظهور عدد الردرود
     $('.get-reply').on('click', function () {
+        show_count_reply = $(this).siblings('.show-reply').children('.count-reply');
+
         var message_id = $(this).data('mid');
         $('.reply-message').data('mid', $(this).data('mid'));
         $('#reply_model .spinner-border').show();
@@ -120,6 +124,7 @@ $(document).ready(function () {
               
           },
           success:function(data) {
+            show_count_reply.text(data.count_reply); // عرض عدد الردود 
             if ( $.isEmptyObject(data.error) ) {
               swal("نجاح", "تم إرسال الرد بنجاح", "success");
               $('#reply_model textarea').removeClass('is-invalid');
@@ -134,8 +139,9 @@ $(document).ready(function () {
     });
 
     $('.show-reply').on('click', function () {
+      show_count_reply = $(this).children('.count-reply'); // تحديد العنصر المراد وضع النص فيه
+      console.log(show_count_reply);
       var message_id = $(this).data('mid');
-
       $.ajax({
         type:'GET',
         url:'/send_message/show_reply/' + message_id,
@@ -162,9 +168,9 @@ $(document).ready(function () {
         btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
       },
       success:function(data) {
+        show_count_reply.text(data.count_reply); // عرض عدد الردود 
         btn.parents('.list-group').fadeOut();
         btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
-        console.log(data);
       }
   });
 });
