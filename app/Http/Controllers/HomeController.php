@@ -30,7 +30,7 @@ class HomeController extends Controller
         return view('home')->with([
             'messages'  => Messages::where([
                 ['user_id' , Auth::user()->id]
-            ])->orderBy('created_at', 'DESC')->get()
+            ])->orderBy('created_at', 'DESC')->simplePaginate(15)
 
         ]);
     }

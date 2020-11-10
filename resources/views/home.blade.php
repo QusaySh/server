@@ -72,7 +72,7 @@
                         <div class="clearfix"></div>
                     </div>
                     @endforeach
-
+                    <div class="row justify-content-center">{{ $messages->links() }}</div>
                 @else
                     <div class="text-center animated zoomInLeft">
                         <img width="150" height="150" src="{{ asset('images/no-data.png') }}" alt="" />

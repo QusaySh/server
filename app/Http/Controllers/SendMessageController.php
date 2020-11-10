@@ -23,11 +23,14 @@ class SendMessageController extends Controller
             $user->views += 1;
             $user->save();
         }
-
+        
         return view('send_message.index')->with([
             'user' => $user,
             'views' => $user->views,
-            'message_show' => Messages::where('show_message', 1)->orderBy('id', 'DESC')->simplePaginate(15)
+            'message_show' => Messages::where([
+                ['show_message', 1],
+                ['user_id', $user->id]
+            ])->orderBy('id', 'DESC')->simplePaginate(15)
         ]);
     }
 
