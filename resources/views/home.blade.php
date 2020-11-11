@@ -27,7 +27,7 @@
                     </li>
                     @if ( Auth::user()->email != null )
                       <li class="list-group-item">
-                          <span><b><i class="fa fa-envelope fa-fw"></i> البريد الإلكتروني:</b></span> <span>{{ Auth::user()->email == null }}.</span>
+                          <span><b><i class="fa fa-envelope fa-fw"></i> البريد الإلكتروني:</b></span> <span>{{ Auth::user()->email }}.</span>
                       </li>
                     @endif
                     <li class="list-group-item">

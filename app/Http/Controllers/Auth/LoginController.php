@@ -49,7 +49,6 @@ class LoginController extends Controller
     public function handleFacebookCallback() {
         try {
             $user = Socialite::driver('facebook')->user();
-            $user->email = null;
             // if ( $user->email == null ) {
             //     return redirect()->route('login')->with('error_facebook', 'يجب أن يكون حسابك تم إنشاؤه بواسطة إيميل, قم بإنشاء حساب تقليدي.');
             // }
