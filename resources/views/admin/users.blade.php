@@ -43,7 +43,7 @@
                             <tr>
                                 <td scope="row">{{ $i }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->email != null ? $user->email : 'لايوجد' }}</td>
                                 <td>{!! $user->admin ? '<i class="fa fa-shield fa-fw"></i>' : '<i class="fa fa-user fa-fw"></i>' !!}</td>
                                 <td>{!! $user->facebook_id == null ? '<i class="fa fa-google fa-fw"></i>' : '<i class="fa fa-facebook fa-fw"></i>' !!}</td>
                                 <td>{!! !empty($user->facebook) ? '<a href="' . $user->facebook . '"><i class="fa fa-facebook-square fa-fw"></i></a>' : '' !!}</td>

@@ -53,14 +53,14 @@ class LoginController extends Controller
             //     return redirect()->route('login')->with('error_facebook', 'يجب أن يكون حسابك تم إنشاؤه بواسطة إيميل, قم بإنشاء حساب تقليدي.');
             // }
             $finduser = User::where('facebook_id', $user->id)->first();
-            if ( User::where('email', $user->email)->first() && !$finduser ) {
+            if ( User::where('email', $user->email)->first() && !$finduser && $user->email != null ) {
                 return redirect()->route('login')->with('error_message', 'البريد الإلكتروني التابع لحسابك مسجل لدينا بالطريقة الإعتيادية, قم بتسجيل الدخول');
             } else if ($finduser) {
                 Auth::login($finduser);
                 return redirect()->route('home');
             } else {
                 $newUser = User::create([
-                    'key'   => uniqid() . time(),
+                    'key'   => uniqid(),
                     'name' => $user->name,
                     'email' => $user->email,
                     'password' => Hash::make('aser515411'),
