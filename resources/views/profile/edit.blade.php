@@ -108,22 +108,24 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="send_email" class="col-md-3 col-form-label">{{ __('إرسال إشعارات') }}:</label>
+                        @if ( Auth::user()->email != null )
+                            <div class="form-group row">
+                                <label for="send_email" class="col-md-3 col-form-label">{{ __('إرسال إشعارات') }}:</label>
 
-                            <div class="custom-control custom-switch mr-3">
-                            <input type="checkbox" class="custom-control-input" id="send_email" name="send_email" 
-                            @if ( old('send_email') )
-                                {{ old('send_email') }}
-                            @else
-                                @if ( Auth::user()->send_email )
-                                    checked
-                                @endif
-                            @endif
-                            >
-                            <label class="custom-control-label" for="send_email">هل تريد إرسال إشعارات عندما يقوم أحد بإرسال رسالة لك؟</label>
+                                    <div class="custom-control custom-switch mr-3">
+                                    <input type="checkbox" class="custom-control-input" id="send_email" name="send_email" 
+                                    @if ( old('send_email') )
+                                        {{ old('send_email') }}
+                                    @else
+                                        @if ( Auth::user()->send_email )
+                                            checked
+                                        @endif
+                                    @endif
+                                    >
+                                    <label class="custom-control-label" for="send_email">هل تريد إرسال إشعارات عندما يقوم أحد بإرسال رسالة لك؟</label>
+                                    </div>
                             </div>
-                        </div>
+                         @endif
                         
                         <div class="form-group row">
                             <label for="show_name" class="col-md-3 col-form-label">{{ __('ظهور الإسم') }}:</label>

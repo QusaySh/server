@@ -49,7 +49,7 @@ class SendMessageController extends Controller
 
         $user = User::find($id);
 
-        if ( $user->send_email ) {
+        if ( $user->send_email && $user->email != null ) {
             Notification::route('mail', $user->email)->notify(new HelloUser($user));
         }
 
