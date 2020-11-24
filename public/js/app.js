@@ -180,12 +180,11 @@ $(document).ready(function () {
       type:'GET',
       url:'/send_message/show_favorite',
       beforeSend: function () {
-        // btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+        
       },
       success:function(data) {
         $('#pills-favorite').html(data.favorite);
         $('#pills-favorite .spinner').fadeOut('fast');
-        // btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
       }
     });
   });
