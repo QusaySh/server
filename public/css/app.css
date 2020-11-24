@@ -79,17 +79,9 @@ body{
 
 .page-home .container-message .message{
     background-color: #fff;
-    padding: 20px 20px 5px;
-    position: relative;
+    padding: 10px 20px 5px;
     /*box-shadow: 0 0 5px 0 #555;*/
 }
-
-.page-home .container-message .message .fa-close{
-    position: absolute;
-    left: 5px;
-    top: 5px;
-}
-
 .page-home .container-message .message .date{
     font-size: 13px;
     color: #777;

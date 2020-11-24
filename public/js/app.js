@@ -68,7 +68,7 @@ $(document).ready(function () {
           });
     });
 
-    $('.delete-message').on('click', function(e) {
+    $('body').on('click', '.delete-message', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
         swal({
@@ -89,7 +89,7 @@ $(document).ready(function () {
 
     // عند الضغط على رد
     var show_count_reply = ""; // لوضع عنصر ظهور عدد الردرود
-    $('.get-reply').on('click', function () {
+    $('body').on('click', '.get-reply', function () {
         show_count_reply = $(this).siblings('.show-reply').children('.count-reply');
 
         var message_id = $(this).data('mid');
@@ -138,7 +138,7 @@ $(document).ready(function () {
 
     });
 
-    $('.show-reply').on('click', function () {
+    $('body').on('click', '.show-reply', function () {
       show_count_reply = $(this).children('.count-reply'); // تحديد العنصر المراد وضع النص فيه
       console.log(show_count_reply);
       var message_id = $(this).data('mid');
@@ -156,24 +156,39 @@ $(document).ready(function () {
     });
   });
 
-  $('body').on('click', '.delete-reply', function () {
-    var reply_id = $(this).data('rid'),
-        message_id = $(this).data('mid'),
-        btn = $(this);
+    $('body').on('click', '.delete-reply', function () {
+      var reply_id = $(this).data('rid'),
+          message_id = $(this).data('mid'),
+          btn = $(this);
 
+      $.ajax({
+        type:'GET',
+        url:'/send_message/delete_reply/' + reply_id + "/" + message_id,
+        beforeSend: function () {
+          btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+        },
+        success:function(data) {
+          show_count_reply.text(data.count_reply); // عرض عدد الردود 
+          btn.parents('.list-group').fadeOut();
+          btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+        }
+    });
+  });
+
+  $('body').on('click', '.show-favorite', function () {
     $.ajax({
       type:'GET',
-      url:'/send_message/delete_reply/' + reply_id + "/" + message_id,
+      url:'/send_message/show_favorite',
       beforeSend: function () {
-        btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+        // btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
       },
       success:function(data) {
-        show_count_reply.text(data.count_reply); // عرض عدد الردود 
-        btn.parents('.list-group').fadeOut();
-        btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
+        $('#pills-favorite').html(data.favorite);
+        $('#pills-favorite .spinner').fadeOut('fast');
+        // btn.children('i').toggleClass('fa-close fa-spinner fa-spin').parent().toggleClass('text-danger text-info');
       }
+    });
   });
-});
 
     // End Page-home
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Favorite;
 use App\Messages;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\HelloUser;
 use App\Reply;
 use GuzzleHttp\Psr7\Message;
+use Illuminate\Support\Facades\Auth;
 
 class SendMessageController extends Controller
 {
@@ -125,11 +127,61 @@ class SendMessageController extends Controller
         return response()->json(['count_reply' => $count_reply]);
     }
 
+    // add a message to fav
+    public function add_favorite(Request $request){
+        $get_message = Messages::find($request->id);
+        // في حال تم حفظها
+        $fav = Favorite::where('message_id', $request->id)->get();
+        if ( $fav->isNotEmpty() ) {
+            $fav[0]->destroy($fav[0]->id);
+            return back()->with('success', 'تم إزالة الرسالة من المفضلة');
+        } else { // في حال اضافتها
+            $fav = $get_message->favorite()->create([
+                'user_id'       => Auth::user()->id,
+                'message_id'    => $request->id
+            ]);
+            return back()->with('success', 'تم إضافة الرسالة إلى المفضلة');
+        }
+    }
+    // show a favorite message
+    public function show_favorite(Request $request){
+        $favorites = Favorite::where('user_id', Auth::user()->id)->get();
+        $layout_fav = "";
+        if ( $favorites->isNotEmpty() ) {
+            foreach ( $favorites as $fav ) {
+                $layout_fav .= '<div class="row spinner justify-content-center">
+                <div class="spinner-border text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+              <div class="message mb-3 border rounded-lg wow bounceIn" data-wow-offset="30">
+                <div class="text-left mt-0">
+                  <a class="add-fav" href="' . route("send_message.add_favorite", ["id" => $fav->message->id]) . '" data-toggle="tooltip" data-placement="top" title="حذف من المفضلة"><i class="fa fa-save text-success fa-fw"></i></a>
+                  <a class="delete-message" href="'. route("send_message.delete", ["id" => $fav->message->id]) .'" data-toggle="tooltip" data-placement="top" title="حذف الرسالة"><i class="fa fa-close text-danger fa-fw"></i></a>
+                </div>
+                <p class="mb-0 mt-3">' . $fav->message->message . '</p>
+                <hr class="mb-2" />
+                <div class="date row justify-content-between">
+                    <span class="pointer text-info get-reply" data-mid="' . $fav->message->id . '" data-toggle="modal" data-target="#reply_model"><i class="fa fa-reply fa-fw"></i> رد</span>
+                    <span class="pointer text-success show-reply" data-mid="' . $fav->message->id . '" data-toggle="modal" data-target="#show_reply_model"><i class="fa fa-eye fa-fw"></i> عرض الردود (<span class="count-reply">' . $fav->message->reply->count() . '</span>)</span>
+                    <span class=""><i class="fa fa-clock-o fa-fw"></i> ' . $fav->message->created_at->diffForHumans() . '</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>';
+            }
+        } else {
+            $layout_fav .= '<div class="alert alert-primary" role="alert">
+                لم تقم بإضافة رسائل إلى المفضلة.
+            </div>';
+        }
+        return response()->json(['favorite' => $layout_fav]);
+    }
     // delete a message and reply
     public function destroy($id) {
         $messages = Messages::find($id);
         $messages->destroy($id);
         $messages->reply()->delete();
+        $messages->favorite()->delete();
         return back()->with('success', 'تم حذف الرسالة بنجاح');
     }
 

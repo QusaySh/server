@@ -13,7 +13,9 @@ class Messages extends Model
     public function users(){
         return $this->belongsTo('App\User', 'user_id');
     }
-
+    public function favorite(){
+        return $this->hasOne('App\Favorite', 'message_id');
+    }
     public function reply(){
         return $this->hasMany('App\Reply', 'message_id');
     }

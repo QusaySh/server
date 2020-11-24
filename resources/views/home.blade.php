@@ -4,8 +4,15 @@
 
 @section('content')
 <div class="container page-home">
+  @if ( session()->has('success') )
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session()->get('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  @endif
     <div class="row">
-
         <div class="col-md-5">
             <div class="my-information border rounded-lg animated zoomIn">
                 
@@ -51,38 +58,53 @@
         <div class="col-md-7 mt-sm-4 m-lg-0">
             <div class="container-message">
                 @if ( $messages->isNotEmpty() )
-                <h2 class="text-center mb-4 text-secondary animated zoomInLeft"><i class="fa fa-comments fa-fw"></i> الرسائل</h2>
-                    @if ( session()->has('success') )
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session()->get('success') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
+                {{-- <h2 class="text-center mb-4 text-secondary animated zoomInLeft"><i class="fa fa-comments fa-fw"></i> الرسائل</h2> --}}
+                    <ul class="nav nav-pills mb-5 flex-column flex-sm-row" id="pills-tab" role="tablist">
+                      <li class="nav-item flex-sm-fill text-center">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">الرسائل</a>
+                      </li>
+                      <li class="nav-item flex-sm-fill show-favorite text-center">
+                        <a class="nav-link" id="pills-favorite-tab" data-toggle="pill" href="#pills-favorite" role="tab" aria-controls="pills-favorite" aria-selected="false">المفضلة</a>
+                      </li>
+                    </ul>
 
-                    @foreach ($messages as $message)
-                    <div class="message mb-3 border rounded-lg wow bounceIn" data-wow-offset="30">
-                        <div><a class="delete-message" href="{{ route("send_message.delete", ['id' => $message->id]) }}"><i class="fa fa-close text-danger fa-fw"></i></a></div>
-                        <p class="mb-0 mt-3">{{ $message->message }}</p>
-                        <hr class="mb-2" />
-                        <div class="date row justify-content-between">
-                            <span class="pointer text-info get-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#reply_model"><i class="fa fa-reply fa-fw"></i> رد</span>
-                            <span class="pointer text-success show-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#show_reply_model"><i class="fa fa-eye fa-fw"></i> عرض الردود (<span class="count-reply">{{ $message->reply->count() }}</span>)</span>
-                            <span class=""><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</span>
-                        </div>
-                        <div class="clearfix"></div>
+                    <div class="tab-content" id="pills-tabContent">
+                      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            @foreach ($messages as $message)
+                            
+                            <div class="message mb-3 border rounded-lg wow bounceIn" data-wow-offset="30">
+                                <div class="text-left mt-0">
+                                  <a class="add-fav" href="{{ route("send_message.add_favorite", ['id' => $message->id]) }}" data-toggle="tooltip" data-placement="top" title="@if (!empty($message->favorite->message_id) && ($message->favorite->message_id == $message->id ))
+                                    حذف من المفضلة
+                                @else إضافة إلى المفضلة @endif"><i class="fa fa-save @if (!empty($message->favorite->message_id) && ($message->favorite->message_id == $message->id ))
+                                      text-success
+                                  @else text-secondary @endif fa-fw"></i></a>
+                                  <a class="delete-message" href="{{ route("send_message.delete", ['id' => $message->id]) }}" data-toggle="tooltip" data-placement="top" title="حذف الرسالة"><i class="fa fa-close text-danger fa-fw"></i></a>
+                                </div>
+                                <p class="mb-0 mt-3">{{ $message->message }}</p>
+                                <hr class="mb-2" />
+                                <div class="date row justify-content-between">
+                                    <span class="pointer text-info get-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#reply_model"><i class="fa fa-reply fa-fw"></i> رد</span>
+                                    <span class="pointer text-success show-reply" data-mid="{{ $message->id }}" data-toggle="modal" data-target="#show_reply_model"><i class="fa fa-eye fa-fw"></i> عرض الردود (<span class="count-reply">{{ $message->reply->count() }}</span>)</span>
+                                    <span class=""><i class="fa fa-clock-o fa-fw"></i> {{ $message->created_at->diffForHumans() }}</span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            @endforeach
+                            <div class="row justify-content-center">{{ $messages->links() }}</div>
+                        @else
+                            <div class="text-center animated zoomInLeft">
+                                <img width="150" height="150" src="{{ asset('images/no-data.png') }}" alt="" />
+                                <h3 class="mt-4">لايوجد  لديك رسائل</h3>
+                                <p class="mb-1">قم بنشر الرابط الخاص بك</p>
+                                {{-- <p class="mt-0 text-info" style="font-size: 14px">{{ route("send_message.index", ['key' => Auth::user()->key ])}}</p> --}}
+                            </div>
+                        @endif
+                      </div>
+                      <div class="tab-pane fade" id="pills-favorite" role="tabpanel" aria-labelledby="pills-favorite-tab">
+
+                      </div>
                     </div>
-                    @endforeach
-                    <div class="row justify-content-center">{{ $messages->links() }}</div>
-                @else
-                    <div class="text-center animated zoomInLeft">
-                        <img width="150" height="150" src="{{ asset('images/no-data.png') }}" alt="" />
-                        <h3 class="mt-4">لايوجد  لديك رسائل</h3>
-                        <p class="mb-1">قم بنشر الرابط الخاص بك</p>
-                        {{-- <p class="mt-0 text-info" style="font-size: 14px">{{ route("send_message.index", ['key' => Auth::user()->key ])}}</p> --}}
-                    </div>
-                @endif
             </div>
 
         </div>

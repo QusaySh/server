@@ -29,10 +29,12 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'verified']], func
 // Send Message
 Route::group(['prefix' => 'send_message'], function () {
 
-    Route::get('/{key}', 'SendMessageController@index')->name('send_message.index');
     Route::post('/send/{id}', 'SendMessageController@send')->name('send_message.send');
     Route::get('/delete/{id}', 'SendMessageController@destroy')->name('send_message.delete')->middleware('auth');
-
+    Route::get('/add_favorite/{id}', 'SendMessageController@add_favorite')->name('send_message.add_favorite')->middleware('auth');
+    Route::get('/show_favorite', 'SendMessageController@show_favorite')->name('send_message.show_favorite')->middleware('auth');
+    Route::get('/{key}', 'SendMessageController@index')->name('send_message.index');
+    
     // get reply message
     Route::get('/get_reply/{message_id}', 'SendMessageController@get_reply')->middleware('auth');
     Route::post('/reply_message', 'SendMessageController@reply_message')->middleware('auth');
